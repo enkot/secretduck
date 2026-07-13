@@ -105,7 +105,6 @@ const teamSlug = computed(() => page.props.currentTeam?.slug ?? '');
                 <Button
                     v-if="canManageInvitations"
                     as-child
-                    class="mt-6 bg-brand-soft text-white hover:bg-brand-soft/90"
                     size="lg"
                 >
                     <Link :href="create(teamSlug)">
