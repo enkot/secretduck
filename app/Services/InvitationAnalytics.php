@@ -9,6 +9,8 @@ use App\Models\InvitationRecipient;
 
 final class InvitationAnalytics
 {
+    public function __construct(private readonly DateTimeFormatter $dateTimeFormatter) {}
+
     /** @return array<string, int|float> */
     public function summary(Invitation $invitation): array
     {
@@ -66,7 +68,8 @@ final class InvitationAnalytics
      *         guestCount: int,
      *         dietaryNotes: string|null,
      *         message: string|null,
-     *         submittedAt: string
+     *         submittedAt: string,
+     *         submittedAtLabel: string
      *     }|null
      * }>
      */
@@ -88,7 +91,10 @@ final class InvitationAnalytics
                 'revealedAt' => $recipient->revealed_at?->toIso8601String(),
                 'revokedAt' => $recipient->revoked_at?->toIso8601String(),
                 'expiresAt' => $recipient->expires_at?->toIso8601String(),
-                'rsvp' => $recipient->rsvp === null ? null : HostRsvpData::from($recipient->rsvp),
+                'rsvp' => $recipient->rsvp === null ? null : HostRsvpData::from(
+                    $recipient->rsvp,
+                    $this->dateTimeFormatter->dateTime($recipient->rsvp->submitted_at, $invitation->timezone),
+                ),
             ])
             ->all();
 

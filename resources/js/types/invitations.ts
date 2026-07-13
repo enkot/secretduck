@@ -11,12 +11,14 @@ export interface HostRsvpResponse {
     dietaryNotes: string | null;
     message: string | null;
     submittedAt: string;
+    submittedAtLabel: string;
 }
 
 export interface InvitationCard {
     publicId: string;
     title: string | null;
     startsAt: string | null;
+    startsAtLabel: string | null;
     status: InvitationStatus;
     recipientCount: number;
     completedCount: number;
@@ -42,6 +44,7 @@ export interface HostInvitation {
     title: string | null;
     hostNames: string | null;
     startsAt: string | null;
+    startsAtLabel: string | null;
     timezone: string | null;
     venueName: string | null;
     address: string | null;
@@ -96,6 +99,7 @@ export interface RevealPayload {
     title: string;
     hostNames: string;
     startsAt: string;
+    startsAtLabel: string | null;
     timezone: string;
     venueName: string | null;
     address: string | null;
@@ -111,6 +115,7 @@ export interface RevealPayload {
         } | null;
         maxGuests: number;
         deadline: string | null;
+        deadlineLabel: string | null;
         canUpdate: boolean;
     };
     actions: {

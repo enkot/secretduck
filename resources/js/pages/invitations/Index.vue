@@ -35,10 +35,7 @@ const teamSlug = computed(() => page.props.currentTeam?.slug ?? '');
                     Every occasion, quest, and response in one place.
                 </p>
             </div>
-            <Button
-                v-if="canManageInvitations"
-                as-child
-            >
+            <Button v-if="canManageInvitations" as-child>
                 <Link :href="create(teamSlug)"> <Plus /> New invitation </Link>
             </Button>
         </header>
@@ -71,11 +68,7 @@ const teamSlug = computed(() => page.props.currentTeam?.slug ?? '');
                         class="space-y-3 text-sm text-muted-foreground"
                         ><p class="flex items-center gap-2">
                             <CalendarDays class="size-4" />{{
-                                invitation.startsAt
-                                    ? new Date(
-                                          invitation.startsAt,
-                                      ).toLocaleString()
-                                    : 'Date not set'
+                                invitation.startsAtLabel ?? 'Date not set'
                             }}
                         </p>
                         <p class="flex items-center gap-2">
@@ -102,11 +95,7 @@ const teamSlug = computed(() => page.props.currentTeam?.slug ?? '');
                             : 'Ask a team owner or admin to create an invitation.'
                     }}
                 </p>
-                <Button
-                    v-if="canManageInvitations"
-                    as-child
-                    size="lg"
-                >
+                <Button v-if="canManageInvitations" as-child size="lg">
                     <Link :href="create(teamSlug)">
                         <Plus /> Create an invitation
                     </Link>

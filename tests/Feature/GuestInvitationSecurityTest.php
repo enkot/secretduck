@@ -11,7 +11,9 @@ function guestSecurityFixture(): array
     $invitation = Invitation::factory()->published()->create([
         'title' => 'Hidden Moonlight Wedding',
         'description' => 'The secret ceremony is beside the old observatory.',
-        'starts_at' => now()->addMonth(),
+        'starts_at' => '2027-07-17 16:30:00',
+        'rsvp_deadline_at' => '2027-07-01 12:00:00',
+        'timezone' => 'Europe/Kyiv',
     ]);
     Challenge::factory()->create([
         'invitation_id' => $invitation->id,
@@ -89,6 +91,8 @@ test('challenge completion and reveal are separate authorized responses', functi
         ->assertOk()
         ->assertJsonPath('title', 'Hidden Moonlight Wedding')
         ->assertJsonPath('description', 'The secret ceremony is beside the old observatory.')
+        ->assertJsonPath('startsAtLabel', '17 Jul 2027, 19:30')
+        ->assertJsonPath('rsvp.deadlineLabel', '1 Jul 2027')
         ->assertHeader('Cache-Control', 'no-store, private');
 
     expect($recipient->refresh()->challenge_completed_at)->not->toBeNull()

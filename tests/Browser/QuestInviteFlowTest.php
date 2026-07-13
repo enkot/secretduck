@@ -68,6 +68,24 @@ test('invitations workspace uses the SecretDuck top header navigation', function
         ->assertNoAccessibilityIssues();
 });
 
+test('invitation dates hydrate consistently between the server and browser', function () {
+    $host = User::factory()->create();
+
+    Invitation::factory()->create([
+        'team_id' => $host->current_team_id,
+        'title' => 'Summer garden party',
+        'starts_at' => '2027-07-17 16:30:00',
+        'timezone' => 'Europe/Kyiv',
+    ]);
+
+    $this->actingAs($host);
+
+    visit(route('invitations.index', $host->currentTeam))
+        ->assertSee('Summer garden party')
+        ->assertSee('17 Jul 2027, 19:30')
+        ->assertNoJavaScriptErrors();
+});
+
 test('admin area uses larger design tokens', function () {
     $host = User::factory()->create();
 

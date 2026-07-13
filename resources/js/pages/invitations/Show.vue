@@ -80,11 +80,7 @@ function publishFieldLabel(field: string): string {
                     {{ invitation.title || 'Untitled invitation' }}
                 </h1>
                 <p class="mt-2 text-muted-foreground">
-                    {{
-                        invitation.startsAt
-                            ? new Date(invitation.startsAt).toLocaleString()
-                            : 'Event date not set'
-                    }}
+                    {{ invitation.startsAtLabel ?? 'Event date not set' }}
                 </p>
             </div>
             <div class="flex flex-wrap gap-2">

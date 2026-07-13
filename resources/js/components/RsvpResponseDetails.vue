@@ -5,13 +5,6 @@ import type { HostRsvpResponse } from '@/types';
 defineProps<{
     rsvp: HostRsvpResponse;
 }>();
-
-function formatSubmittedAt(value: string): string {
-    return new Intl.DateTimeFormat(undefined, {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-    }).format(new Date(value));
-}
 </script>
 
 <template>
@@ -31,7 +24,7 @@ function formatSubmittedAt(value: string): string {
             <div class="grid gap-1">
                 <dt class="text-muted-foreground">Last submitted</dt>
                 <dd class="font-medium">
-                    {{ formatSubmittedAt(rsvp.submittedAt) }}
+                    {{ rsvp.submittedAtLabel }}
                 </dd>
             </div>
         </dl>

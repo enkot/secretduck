@@ -81,7 +81,7 @@ test('hosts can view complete recipient RSVP responses', function () {
         'guest_count' => 2,
         'dietary_notes' => 'One vegan meal',
         'message' => 'We are delighted!',
-        'submitted_at' => now(),
+        'submitted_at' => '2027-07-17 16:30:00',
     ]);
 
     $this->actingAs($host)
@@ -94,7 +94,8 @@ test('hosts can view complete recipient RSVP responses', function () {
             ->where('invitation.recipients.0.rsvp.responseLabel', 'Attending')
             ->where('invitation.recipients.0.rsvp.guestCount', 2)
             ->where('invitation.recipients.0.rsvp.dietaryNotes', 'One vegan meal')
-            ->where('invitation.recipients.0.rsvp.message', 'We are delighted!'));
+            ->where('invitation.recipients.0.rsvp.message', 'We are delighted!')
+            ->where('invitation.recipients.0.rsvp.submittedAtLabel', '17 Jul 2027, 19:30'));
 
     $analyticsRecipient = app(InvitationAnalytics::class)->recipients($invitation)[0];
 
@@ -106,6 +107,7 @@ test('hosts can view complete recipient RSVP responses', function () {
             'guestCount' => 2,
             'dietaryNotes' => 'One vegan meal',
             'message' => 'We are delighted!',
+            'submittedAtLabel' => '17 Jul 2027, 19:30',
         ]);
 });
 

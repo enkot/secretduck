@@ -7,6 +7,7 @@ use App\Models\Challenge;
 use App\Models\Invitation;
 use App\Models\InvitationRecipient;
 use App\Models\User;
+use Inertia\Testing\AssertableInertia as Assert;
 
 test('unverified hosts cannot reach their invitations workspace', function () {
     $user = User::factory()->unverified()->create();
@@ -14,6 +15,24 @@ test('unverified hosts cannot reach their invitations workspace', function () {
     $this->actingAs($user)
         ->get(route('invitations.index', $user->currentTeam))
         ->assertRedirect(route('verification.notice'));
+});
+
+test('invitation workspace includes a pre-formatted event date', function () {
+    $owner = User::factory()->create();
+    $invitation = Invitation::factory()->create([
+        'team_id' => $owner->current_team_id,
+        'starts_at' => '2027-07-17 16:30:00',
+        'timezone' => 'Europe/Kyiv',
+    ]);
+
+    $this->actingAs($owner)
+        ->get(route('invitations.index', $owner->currentTeam))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('invitations/Index')
+            ->where('invitations.0.publicId', $invitation->public_id)
+            ->where('invitations.0.startsAtLabel', '17 Jul 2027, 19:30'),
+        );
 });
 
 test('owners create and update team invitation drafts', function () {

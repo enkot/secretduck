@@ -7,6 +7,8 @@ use App\Models\Invitation;
 
 final class RevealPayloadBuilder
 {
+    public function __construct(private readonly DateTimeFormatter $dateTimeFormatter) {}
+
     /** @return array<string, mixed> */
     public function build(Invitation $invitation, GuestSession $session): array
     {
@@ -20,6 +22,9 @@ final class RevealPayloadBuilder
             'title' => $invitation->title,
             'hostNames' => $invitation->host_names,
             'startsAt' => $invitation->starts_at?->toIso8601String(),
+            'startsAtLabel' => $invitation->starts_at === null
+                ? null
+                : $this->dateTimeFormatter->dateTime($invitation->starts_at, $invitation->timezone),
             'timezone' => $invitation->timezone,
             'venueName' => $invitation->venue_name,
             'address' => $invitation->address,
@@ -35,6 +40,9 @@ final class RevealPayloadBuilder
                 ],
                 'maxGuests' => $recipient->max_guests,
                 'deadline' => $deadline?->toIso8601String(),
+                'deadlineLabel' => $deadline === null
+                    ? null
+                    : $this->dateTimeFormatter->date($deadline, $invitation->timezone),
                 'canUpdate' => $deadline === null || $deadline->isFuture(),
             ],
             'actions' => [

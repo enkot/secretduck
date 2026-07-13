@@ -15,6 +15,7 @@ use App\Http\Requests\Host\UpdateInvitationRequest;
 use App\Models\Invitation;
 use App\Models\Team;
 use App\Models\TeamInvitation;
+use App\Services\DateTimeFormatter;
 use App\Services\InvitationAnalytics;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,6 +27,8 @@ use Inertia\Response;
 
 class InvitationController extends Controller
 {
+    public function __construct(private readonly DateTimeFormatter $dateTimeFormatter) {}
+
     public function index(Request $request, InvitationAnalytics $analytics): Response
     {
         $team = $this->team($request);
@@ -107,6 +110,9 @@ class InvitationController extends Controller
             'publicId' => $invitation->public_id,
             'title' => $invitation->title,
             'startsAt' => $invitation->starts_at?->toIso8601String(),
+            'startsAtLabel' => $invitation->starts_at === null
+                ? null
+                : $this->dateTimeFormatter->dateTime($invitation->starts_at, $invitation->timezone),
             'status' => $invitation->isExpired() ? 'expired' : $invitation->status->value,
             'recipientCount' => $invitation->recipients_count,
             'completedCount' => $invitation->completed_count,
@@ -147,6 +153,9 @@ class InvitationController extends Controller
             'title' => $invitation->title,
             'hostNames' => $invitation->host_names,
             'startsAt' => $invitation->starts_at?->format('Y-m-d\TH:i'),
+            'startsAtLabel' => $invitation->starts_at === null
+                ? null
+                : $this->dateTimeFormatter->dateTime($invitation->starts_at, $invitation->timezone),
             'timezone' => $invitation->timezone,
             'venueName' => $invitation->venue_name,
             'address' => $invitation->address,
@@ -178,7 +187,10 @@ class InvitationController extends Controller
                 'openedAt' => $recipient->opened_at?->toIso8601String(),
                 'completedAt' => $recipient->challenge_completed_at?->toIso8601String(),
                 'revokedAt' => $recipient->revoked_at?->toIso8601String(),
-                'rsvp' => $recipient->rsvp === null ? null : HostRsvpData::from($recipient->rsvp),
+                'rsvp' => $recipient->rsvp === null ? null : HostRsvpData::from(
+                    $recipient->rsvp,
+                    $this->dateTimeFormatter->dateTime($recipient->rsvp->submitted_at, $invitation->timezone),
+                ),
             ]) : [],
         ];
     }

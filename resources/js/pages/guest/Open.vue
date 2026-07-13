@@ -385,16 +385,7 @@ onMounted(async () => {
                                 When
                             </p>
                             <p class="mt-2 text-lg font-medium">
-                                {{
-                                    new Date(payload.startsAt).toLocaleString(
-                                        [],
-                                        {
-                                            dateStyle: 'long',
-                                            timeStyle: 'short',
-                                            timeZone: payload.timezone,
-                                        },
-                                    )
-                                }}
+                                {{ payload.startsAtLabel }}
                             </p>
                         </div>
                         <div>
@@ -450,15 +441,10 @@ onMounted(async () => {
                                 Will you join us?
                             </h2>
                             <p
-                                v-if="payload.rsvp.deadline"
+                                v-if="payload.rsvp.deadlineLabel"
                                 class="mt-2 text-sm text-stone-500"
                             >
-                                Reply by
-                                {{
-                                    new Date(
-                                        payload.rsvp.deadline,
-                                    ).toLocaleDateString()
-                                }}
+                                Reply by {{ payload.rsvp.deadlineLabel }}
                             </p>
                         </div>
                         <fieldset class="grid gap-2 sm:grid-cols-3">

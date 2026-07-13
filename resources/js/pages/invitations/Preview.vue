@@ -63,13 +63,7 @@ const teamSlug = computed(() => page.props.currentTeam?.slug ?? '');
                     </p>
                     <div class="mx-auto max-w-md rounded-2xl bg-stone-100 p-5">
                         <p>
-                            {{
-                                invitation.startsAt
-                                    ? new Date(
-                                          invitation.startsAt,
-                                      ).toLocaleString()
-                                    : 'Date not set'
-                            }}
+                            {{ invitation.startsAtLabel ?? 'Date not set' }}
                         </p>
                         <p>
                             {{ invitation.venueName }} {{ invitation.address }}
