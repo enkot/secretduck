@@ -72,21 +72,21 @@ const steps = [
         number: '01',
         title: 'Write & lock',
         body: 'Title, date, place — then choose the challenge that guards it.',
-        image: '/images/duck-challenge.png',
+        image: '/images/duck-challenge.svg',
         imageAlt: 'Duck choosing a challenge to seal an invitation',
     },
     {
         number: '02',
         title: 'Drop the link',
         body: 'secretduck.app/i/ABC123 lands in the group chat. Curiosity does the rest.',
-        image: '/images/duck-link.png',
+        image: '/images/duck-link.svg',
         imageAlt: 'Duck sharing a sealed invitation link',
     },
     {
         number: '03',
         title: 'Watch it open',
         body: 'Every solve pings your host view — RSVPs arrive already warmed up.',
-        image: '/images/duck-watch.png',
+        image: '/images/duck-watch.svg',
         imageAlt: 'Duck watching guests solve and open invitations',
     },
 ];
@@ -402,7 +402,7 @@ const features = [
 
                 <div class="overflow-hidden rounded-2xl">
                     <img
-                        src="/images/duck-coffee.png"
+                        src="/images/duck-coffee.svg"
                         alt="Duck sending a new secret invitation"
                         class="block h-auto w-full"
                     />
@@ -410,11 +410,8 @@ const features = [
             </section>
         </div>
 
-        <section
-            id="how"
-            class="scroll-mt-6 bg-[#0b0a11] px-5 py-16 text-[#f7f8fa] lg:px-11"
-        >
-            <div class="mx-auto max-w-[1240px]">
+        <section id="how" class="scroll-mt-6 bg-[#0b0a11] py-16 text-[#f7f8fa]">
+            <div class="mx-auto max-w-[1240px] px-5 lg:px-11">
                 <div
                     class="mb-9 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
                 >
@@ -432,7 +429,7 @@ const features = [
                     <div
                         v-for="step in steps"
                         :key="step.number"
-                        class="overflow-hidden p-8 rounded-lg border-2 border-[rgba(247,248,250,0.08)] transition hover:border-[rgba(247,248,250,0.16)]"
+                        class="overflow-hidden rounded-lg border-[rgba(247,248,250,0.08)] p-8 transition hover:border-[rgba(247,248,250,0.16)]"
                     >
                         <img
                             :src="step.image"
@@ -464,9 +461,7 @@ const features = [
                 id="challenges"
                 class="grid scroll-mt-6 items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:px-11"
             >
-                <div
-                    class="rounded-2xl"
-                >
+                <div class="rounded-2xl">
                     <div
                         v-if="!solved"
                         class="flex flex-col items-center gap-4"
@@ -640,10 +635,8 @@ const features = [
             </section>
         </div>
 
-        <footer
-            class="bg-[#0b0a11] px-5 pt-14 pb-11 text-center text-[#f7f8fa] lg:px-11"
-        >
-            <div class="mx-auto max-w-[1240px]">
+        <footer class="bg-[#0b0a11] pt-14 pb-11 text-center text-[#f7f8fa]">
+            <div class="mx-auto max-w-[1240px] px-5 lg:px-11">
                 <AppLogoIcon
                     alt=""
                     class="mx-auto mb-4.5 size-14 rounded-full"
