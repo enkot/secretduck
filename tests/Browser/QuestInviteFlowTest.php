@@ -16,6 +16,16 @@ test('landing page is responsive accessible and free of JavaScript errors', func
         ->assertNoAccessibilityIssues();
 });
 
+test('landing page how it works section uses the corresponding illustrations', function () {
+    visit('/')
+        ->resize(390, 844)
+        ->assertSee('Host seals. Guest solves. Party happens.')
+        ->assertVisible('img[src="/images/duck-challenge.png"]')
+        ->assertVisible('img[src="/images/duck-link.png"]')
+        ->assertVisible('img[src="/images/duck-watch.png"]')
+        ->assertNoJavaScriptErrors();
+});
+
 test('public pages keep the default design tokens', function () {
     visit('/')
         ->assertNotPresent('[data-admin-area]')

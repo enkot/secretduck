@@ -72,16 +72,22 @@ const steps = [
         number: '01',
         title: 'Write & lock',
         body: 'Title, date, place — then choose the challenge that guards it.',
+        image: '/images/duck-challenge.png',
+        imageAlt: 'Duck choosing a challenge to seal an invitation',
     },
     {
         number: '02',
         title: 'Drop the link',
         body: 'secretduck.app/i/ABC123 lands in the group chat. Curiosity does the rest.',
+        image: '/images/duck-link.png',
+        imageAlt: 'Duck sharing a sealed invitation link',
     },
     {
         number: '03',
         title: 'Watch it open',
         body: 'Every solve pings your host view — RSVPs arrive already warmed up.',
+        image: '/images/duck-watch.png',
+        imageAlt: 'Duck watching guests solve and open invitations',
     },
 ];
 
@@ -406,7 +412,7 @@ const features = [
 
         <section
             id="how"
-            class="scroll-mt-6 bg-[#0b0a11] px-5 py-12 text-[#f7f8fa] lg:px-11"
+            class="scroll-mt-6 bg-[#0b0a11] px-5 py-16 text-[#f7f8fa] lg:px-11"
         >
             <div class="mx-auto max-w-[1240px]">
                 <div
@@ -426,17 +432,28 @@ const features = [
                     <div
                         v-for="step in steps"
                         :key="step.number"
-                        class="rounded-lg bg-[#1e1b29] p-6"
+                        class="overflow-hidden p-8 rounded-lg border-2 border-[rgba(247,248,250,0.08)] transition hover:border-[rgba(247,248,250,0.16)]"
                     >
-                        <p class="mb-3 font-mono text-[13px] text-gold">
-                            {{ step.number }}
-                        </p>
-                        <h3 class="type-heading-sm mb-1.5">{{ step.title }}</h3>
-                        <p
-                            class="text-sm leading-[1.6] text-[rgba(247,248,250,0.64)]"
-                        >
-                            {{ step.body }}
-                        </p>
+                        <img
+                            :src="step.image"
+                            :alt="step.imageAlt"
+                            loading="lazy"
+                            decoding="async"
+                            class="block aspect-3/2 w-full object-cover"
+                        />
+                        <div>
+                            <p class="mb-3 font-mono text-[13px] text-gold">
+                                {{ step.number }}
+                            </p>
+                            <h3 class="type-heading-sm mb-1.5">
+                                {{ step.title }}
+                            </h3>
+                            <p
+                                class="text-sm leading-[1.6] text-[rgba(247,248,250,0.64)]"
+                            >
+                                {{ step.body }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -448,7 +465,7 @@ const features = [
                 class="grid scroll-mt-6 items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:px-11"
             >
                 <div
-                    class="rounded-2xl bg-white px-6 py-10 shadow-card-light sm:px-9"
+                    class="rounded-2xl"
                 >
                     <div
                         v-if="!solved"
@@ -539,7 +556,7 @@ const features = [
                         <span
                             v-for="type in challengeTypes"
                             :key="type.label"
-                            class="rounded-full px-5 py-3 text-[15px] font-bold"
+                            class="rounded-md px-5 py-3 text-[15px] font-bold"
                             :class="type.class"
                             >{{ type.label }}</span
                         >
