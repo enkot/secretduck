@@ -7,6 +7,25 @@
             <meta name="robots" content="{{ $metaRobots }}">
         @endisset
 
+        <meta name="description" content="Create private invitations with playful challenges, share one link, and reveal the details only after guests solve them.">
+
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ config('app.name', 'SecretDuck') }}">
+        <meta property="og:title" content="{{ config('app.name', 'SecretDuck') }} — Playful private invitations">
+        <meta property="og:description" content="Create private invitations with playful challenges, share one link, and reveal the details only after guests solve them.">
+        <meta property="og:url" content="{{ request()->url() }}">
+        <meta property="og:image" content="{{ asset('logo.png') }}">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="1549">
+        <meta property="og:image:height" content="1549">
+        <meta property="og:image:alt" content="{{ config('app.name', 'SecretDuck') }} duck logo">
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="{{ config('app.name', 'SecretDuck') }} — Playful private invitations">
+        <meta name="twitter:description" content="Create private invitations with playful challenges, share one link, and reveal the details only after guests solve them.">
+        <meta name="twitter:image" content="{{ asset('logo.png') }}">
+        <meta name="twitter:image:alt" content="{{ config('app.name', 'SecretDuck') }} duck logo">
+
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
             (function() {
