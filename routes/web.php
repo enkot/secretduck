@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Guest\ChallengeController as GuestChallengeController;
 use App\Http\Controllers\Guest\GuestAuthorizationController;
@@ -19,6 +20,14 @@ use App\Http\Middleware\EnsureTeamMembership;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'Welcome')->name('home');
+
+Route::prefix('auth/google')
+    ->name('auth.google.')
+    ->middleware(['guest', 'throttle:10,1'])
+    ->group(function () {
+        Route::get('redirect', [GoogleAuthController::class, 'redirect'])->name('redirect');
+        Route::get('callback', [GoogleAuthController::class, 'callback'])->name('callback');
+    });
 
 Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])

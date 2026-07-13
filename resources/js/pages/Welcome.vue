@@ -548,7 +548,7 @@ const features = [
             </section>
 
             <section
-                class="mx-5 rounded-2xl bg-blue px-6 py-11 text-white sm:px-12 lg:mx-11"
+                class="mx-5 rounded-2xl bg-primary px-6 py-11 text-white sm:px-12 lg:mx-11"
             >
                 <div class="mb-10 max-w-[560px]">
                     <span class="type-eyebrow text-white/70"

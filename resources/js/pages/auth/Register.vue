@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
+import GoogleSignInButton from '@/components/GoogleSignInButton.vue';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TeamInvitationAlert from '@/components/TeamInvitationAlert.vue';
@@ -40,6 +41,12 @@ defineOptions({
         v-slot="{ errors, processing }"
         class="flex flex-col gap-6"
     >
+        <GoogleSignInButton
+            :error="errors.google"
+            :invitation="teamInvitation?.code"
+            label="Sign up with Google"
+        />
+
         <div class="grid gap-6">
             <div class="grid gap-2">
                 <Label for="name">Name</Label>
@@ -52,6 +59,7 @@ defineOptions({
                     autocomplete="name"
                     name="name"
                     placeholder="Full name"
+                    class="h-12 px-4 text-base md:text-base"
                 />
                 <InputError :message="errors.name" />
             </div>
@@ -66,6 +74,7 @@ defineOptions({
                     autocomplete="email"
                     name="email"
                     placeholder="email@example.com"
+                    class="h-12 px-4 text-base md:text-base"
                 />
                 <InputError :message="errors.email" />
             </div>
@@ -80,6 +89,7 @@ defineOptions({
                     name="password"
                     placeholder="Password"
                     :passwordrules="passwordRules"
+                    class="h-12 pr-10 pl-4 text-base md:text-base"
                 />
                 <InputError :message="errors.password" />
             </div>
@@ -94,13 +104,14 @@ defineOptions({
                     name="password_confirmation"
                     placeholder="Confirm password"
                     :passwordrules="passwordRules"
+                    class="h-12 pr-10 pl-4 text-base md:text-base"
                 />
                 <InputError :message="errors.password_confirmation" />
             </div>
 
             <Button
                 type="submit"
-                class="mt-2 w-full"
+                class="mt-2 h-12 w-full text-base"
                 tabindex="5"
                 :disabled="processing"
                 data-test="register-user-button"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
+import GoogleSignInButton from '@/components/GoogleSignInButton.vue';
 import InputError from '@/components/InputError.vue';
 import PasskeyVerify from '@/components/PasskeyVerify.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
@@ -45,7 +46,7 @@ defineProps<{
         action="Log in"
     />
 
-    <PasskeyVerify />
+    <PasskeyVerify button-class="h-12 text-base" />
 
     <Form
         v-bind="store.form()"
@@ -53,6 +54,11 @@ defineProps<{
         v-slot="{ errors, processing }"
         class="flex flex-col gap-6"
     >
+        <GoogleSignInButton
+            :error="errors.google"
+            :invitation="teamInvitation?.code"
+        />
+
         <div class="grid gap-6">
             <div class="grid gap-2">
                 <Label for="email">Email address</Label>
@@ -65,6 +71,7 @@ defineProps<{
                     :tabindex="1"
                     autocomplete="email"
                     placeholder="email@example.com"
+                    class="h-12 px-4 text-base md:text-base"
                 />
                 <InputError :message="errors.email" />
             </div>
@@ -88,6 +95,7 @@ defineProps<{
                     :tabindex="2"
                     autocomplete="current-password"
                     placeholder="Password"
+                    class="h-12 pr-10 pl-4 text-base md:text-base"
                 />
                 <InputError :message="errors.password" />
             </div>
@@ -101,7 +109,7 @@ defineProps<{
 
             <Button
                 type="submit"
-                class="mt-4 w-full"
+                class="mt-4 h-12 w-full text-base"
                 :tabindex="4"
                 :disabled="processing"
                 data-test="login-button"

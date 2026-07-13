@@ -3,10 +3,12 @@ import type { UrlMethodPair } from '@inertiajs/core';
 import { router } from '@inertiajs/vue3';
 import { usePasskeyVerify } from '@laravel/passkeys/vue';
 import { KeyRound } from '@lucide/vue';
+import type { HTMLAttributes } from 'vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+import { cn } from '@/lib/utils';
 
 type Props = {
     routes?: {
@@ -16,6 +18,7 @@ type Props = {
     label?: string;
     loadingLabel?: string;
     separator?: string;
+    buttonClass?: HTMLAttributes['class'];
 };
 
 const props = defineProps<Props>();
@@ -41,7 +44,7 @@ const { verify, isLoading, error, isSupported } = usePasskeyVerify({
             <Button
                 type="button"
                 variant="outline"
-                class="w-full"
+                :class="cn('w-full', props.buttonClass)"
                 @click="verify"
                 :disabled="isLoading"
             >

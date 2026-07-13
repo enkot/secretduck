@@ -24,6 +24,28 @@ test('public pages keep the default design tokens', function () {
         ->assertNoJavaScriptErrors();
 });
 
+test('login and registration pages use larger form controls', function () {
+    $page = visit(route('login'));
+
+    $page
+        ->assertScript("getComputedStyle(document.querySelector('#email')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('#password')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('[data-test=\"google-auth-button\"]')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('[data-test=\"login-button\"]')).height", '48px')
+        ->assertNoJavaScriptErrors();
+
+    $page
+        ->click('@register-link')
+        ->assertPathIs('/register')
+        ->assertScript("getComputedStyle(document.querySelector('#name')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('#email')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('#password')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('#password_confirmation')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('[data-test=\"google-auth-button\"]')).height", '48px')
+        ->assertScript("getComputedStyle(document.querySelector('[data-test=\"register-user-button\"]')).height", '48px')
+        ->assertNoJavaScriptErrors();
+});
+
 test('invitations workspace uses the SecretDuck top header navigation', function () {
     $host = User::factory()->create();
 
