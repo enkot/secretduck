@@ -52,14 +52,5 @@ const googleUrl = computed(() =>
 
         <InputError :message="error" class="text-center" />
 
-        <div class="flex items-center gap-3" aria-hidden="true">
-            <div class="h-px flex-1 bg-border" />
-            <span
-                class="text-xs font-medium tracking-wide text-muted-foreground uppercase"
-            >
-                Or continue with email
-            </span>
-            <div class="h-px flex-1 bg-border" />
-        </div>
     </div>
 </template>

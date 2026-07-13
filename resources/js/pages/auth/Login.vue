@@ -5,6 +5,7 @@ import InputError from '@/components/InputError.vue';
 import PasskeyVerify from '@/components/PasskeyVerify.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TeamInvitationAlert from '@/components/TeamInvitationAlert.vue';
+import { Separator } from '@/components/ui/separator';
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -45,8 +46,21 @@ defineProps<{
         :invitation="teamInvitation"
         action="Log in"
     />
+    <div class="grid gap-4">
+        <PasskeyVerify button-class="h-12 text-base" />
+        <GoogleSignInButton :invitation="teamInvitation?.code" />
+    </div>
 
-    <PasskeyVerify button-class="h-12 text-base" />
+    <div class="relative my-2">
+        <div class="absolute inset-0 flex items-center">
+            <Separator class="w-full" />
+        </div>
+        <div class="relative flex justify-center text-xs uppercase">
+            <span class="bg-background px-2 text-muted-foreground">
+                Or continue with email
+            </span>
+        </div>
+    </div>
 
     <Form
         v-bind="store.form()"
@@ -54,11 +68,6 @@ defineProps<{
         v-slot="{ errors, processing }"
         class="flex flex-col gap-6"
     >
-        <GoogleSignInButton
-            :error="errors.google"
-            :invitation="teamInvitation?.code"
-        />
-
         <div class="grid gap-6">
             <div class="grid gap-2">
                 <Label for="email">Email address</Label>
