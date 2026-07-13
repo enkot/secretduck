@@ -1,0 +1,443 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   DiplomatDuck design system
+   Primitives (--ddk-*) are authored dark-first upstream; here the
+   dark world lives under `.dark` and the light world in `:root`, so
+   the existing appearance switcher (useAppearance) keeps working.
+   Everything below the primitives is an alias — components read the
+   semantic names, never the raw hues.
+   ============================================================ */
+
+:root {
+    /* --- Brand & accent (identical in both worlds) ---------- */
+    --ddk-brand: #0f9d63; /* primary action — emerald, overrides the DS's logo blue */
+    --ddk-brand-bright: #16b87a; /* hover / glow lift */
+    --ddk-brand-soft: #0b6b45; /* deep fills, chart areas */
+    --ddk-blue: #2563ff; /* demoted to accent: links, info, charts */
+    --ddk-blue-bright: #5b8cff;
+    --ddk-blue-soft: #1d3a8a;
+    --ddk-violet-deep: #463bb0; /* spotlight cards on dark */
+    --ddk-violet-mid: #5f55a8; /* faint accent / hairline on dark */
+    --ddk-gold: #f5b63e; /* duck-mascot warmth, highlight chip */
+    --ddk-gold-deep: #d7920c; /* gold pressed / beak shadow */
+    --ddk-pink: #f87fb0; /* friendly punctuation, sticker outline */
+
+    --ddk-canvas-light: #ffffff; /* dense / transactional pages */
+    --ddk-press-light: #f0f1f5; /* pressed inverted button */
+    --ddk-press-stronger: #e8eaef;
+
+    --ddk-hairline-cool: #cfd3e0; /* form-field borders on light */
+    --ddk-hairline-cloud: #e5e7eb; /* table dividers on light */
+
+    --ddk-ink-muted: #545b70; /* secondary text on light */
+    --ddk-ink-press: #1a1a1a; /* pressed inverted-button label */
+    --ddk-on-brand: #ffffff; /* label on an emerald fill */
+    --ddk-on-blue: #ffffff; /* text on blue / violet fills */
+
+    --ddk-ring-focus: rgba(15, 157, 99, 0.55);
+
+    /* --- Light world ---------------------------------------- */
+    --ddk-night: #f1f0ed; /* sidebar / code / insets — a hair below canvas */
+    --ddk-canvas: #fcfcfb; /* page background */
+    --ddk-surface: #ffffff; /* raised cards */
+    --ddk-surface-2: #f1f1ef; /* nested / hover fill */
+    --ddk-surface-3: #e8e8e4; /* pressed / active nested */
+
+    --ddk-on-dark: #1a1a18; /* primary text */
+    --ddk-on-dark-muted: #5f5e58; /* captions, cell values */
+    --ddk-on-dark-faint: #97968f; /* dim labels, ghost fills */
+
+    --ddk-hairline: rgba(34, 30, 24, 0.14);
+    --ddk-hairline-strong: rgba(34, 30, 24, 0.2);
+    --ddk-divider: rgba(34, 30, 24, 0.09);
+    --ddk-ghost-fill: rgba(24, 20, 14, 0.055);
+
+    --ddk-violet: #7a6ae8;
+    --ddk-ink: #1a1a18;
+
+    /* Status hues darken on light — the bright ones are illegible */
+    --ddk-positive: #0f9d63;
+    --ddk-positive-soft: rgba(52, 211, 153, 0.18);
+    --ddk-pending: #b87d05;
+    --ddk-pending-soft: rgba(217, 146, 12, 0.16);
+    --ddk-attention: #c83b66;
+    --ddk-attention-soft: rgba(242, 120, 154, 0.18);
+    --ddk-info: #2563ff;
+    --ddk-info-soft: rgba(37, 99, 255, 0.12);
+
+    --ddk-on-status: #ffffff; /* label on a solid status fill */
+
+    --card-border-color: transparent; /* cards are borderless color blocks */
+    --card-shadow: none;
+}
+
+.dark {
+    /* --- Dark world (the DS's native polarity) --------------- */
+    --ddk-night: #0b0a11; /* deepest: code, featured tier, app chrome */
+    --ddk-canvas: #15131c; /* default page background */
+    --ddk-surface: #1e1b29; /* raised cards on canvas */
+    --ddk-surface-2: #29263a; /* nested surface / hover fill */
+    --ddk-surface-3: #353146; /* pressed / active nested */
+
+    --ddk-on-dark: #f7f8fa;
+    --ddk-on-dark-muted: rgba(247, 248, 250, 0.64);
+    --ddk-on-dark-faint: rgba(247, 248, 250, 0.38);
+
+    --ddk-hairline: rgba(255, 255, 255, 0.08);
+    --ddk-hairline-strong: rgba(255, 255, 255, 0.16);
+    --ddk-divider: rgba(255, 255, 255, 0.08);
+    --ddk-ghost-fill: rgba(255, 255, 255, 0.09);
+
+    --ddk-violet: #8b7df6;
+    --ddk-ink: #0e1320;
+
+    /* Soft, non-scary semantics — never alarm-red */
+    --ddk-positive: #34d399;
+    --ddk-positive-soft: rgba(52, 211, 153, 0.16);
+    --ddk-pending: #fbbf24;
+    --ddk-pending-soft: rgba(251, 191, 36, 0.16);
+    --ddk-attention: #f2789a;
+    --ddk-attention-soft: rgba(242, 120, 154, 0.16);
+    --ddk-info: #5b8cff;
+    --ddk-info-soft: rgba(91, 140, 255, 0.16);
+
+    --ddk-on-status: #0b0a11; /* the bright fills need ink, not white */
+}
+
+/* ============================================================
+   Semantic aliases — prefer these over raw --ddk-* in components
+   ============================================================ */
+:root,
+.dark {
+    --surface-page: var(--ddk-canvas);
+    --surface-card: var(--ddk-surface);
+    --surface-card-nested: var(--ddk-surface-2);
+    --surface-deep: var(--ddk-night);
+    --surface-light: var(--ddk-canvas-light);
+
+    --text-primary: var(--ddk-on-dark);
+    --text-secondary: var(--ddk-on-dark-muted);
+    --text-faint: var(--ddk-on-dark-faint);
+
+    --action-primary: var(--ddk-brand);
+    --action-primary-hover: var(--ddk-brand-bright);
+    --accent-warm: var(--ddk-gold);
+    --accent-cool: var(--ddk-violet);
+
+    --border-subtle: var(--ddk-hairline);
+    --border-strong: var(--ddk-hairline-strong);
+
+    --status-published: var(--ddk-positive);
+    --status-pending: var(--ddk-pending);
+    --status-negative: var(--ddk-attention);
+    --status-info: var(--ddk-info);
+
+    /* --- shadcn-vue contract, re-pointed at DS tokens -------- */
+    --background: var(--ddk-canvas);
+    --foreground: var(--ddk-on-dark);
+
+    --card: var(--ddk-surface);
+    --card-foreground: var(--ddk-on-dark);
+
+    --popover: var(--ddk-surface);
+    --popover-foreground: var(--ddk-on-dark);
+
+    --primary: var(--ddk-brand);
+    --primary-foreground: var(--ddk-on-brand);
+
+    --secondary: var(--ddk-surface-2);
+    --secondary-foreground: var(--ddk-on-dark);
+
+    --muted: var(--ddk-surface-2);
+    --muted-foreground: var(--ddk-on-dark-muted);
+
+    --accent: var(--ddk-surface-2);
+    --accent-foreground: var(--ddk-on-dark);
+
+    --destructive: var(--ddk-attention);
+    --destructive-foreground: var(--ddk-on-status);
+
+    /* Borderless by default: depth comes from shape + surface color. The base
+       layer paints every element's border-color with --border, so making it
+       transparent retires box borders app-wide (cards, dialogs, popovers,
+       panels) without touching the 1px width — nothing reflows. Form controls
+       read --input and are filled instead; rules that carry real structure use
+       --color-divider. Set these back to --ddk-hairline to bring borders back. */
+    --border: transparent;
+    --input: transparent;
+    --ring: var(--ddk-brand);
+
+    /* chart-4 carries the blue so no series doubles up on the brand emerald */
+    --chart-1: var(--ddk-brand);
+    --chart-2: var(--ddk-violet);
+    --chart-3: var(--ddk-gold);
+    --chart-4: var(--ddk-blue);
+    --chart-5: var(--ddk-pink);
+
+    --sidebar: var(--ddk-night);
+    --sidebar-background: var(--ddk-night);
+    --sidebar-foreground: var(--ddk-on-dark);
+    --sidebar-primary: var(--ddk-brand);
+    --sidebar-primary-foreground: var(--ddk-on-brand);
+    --sidebar-accent: var(--ddk-surface-2);
+    --sidebar-accent-foreground: var(--ddk-on-dark);
+    --sidebar-border: transparent;
+    --sidebar-ring: var(--ddk-brand);
+
+    /* shadcn components that read var(--radius) directly get the card radius */
+    --radius: 22px;
+}
+
+@theme inline {
+    /* Display and UI tiers are both Rubik; mono is JetBrains Mono.
+       Faces are loaded by the `bunny()` entries in vite.config.ts. */
+    --font-sans:
+        Rubik, -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+    --font-display:
+        Rubik, -apple-system, system-ui, 'Segoe UI', Helvetica, Arial,
+        sans-serif;
+    --font-mono: 'JetBrains Mono', Monaco, Menlo, 'Ubuntu Mono', monospace;
+
+    /* Chunky & bubbly: controls are full pills, cards are large blocks.
+       Depth comes from shape + surface color, not borders. */
+    --radius-xs: 10px; /* micro chips, count bubbles */
+    --radius-sm: 14px; /* small tiles, code blocks, thumbnails */
+    --radius-md: 18px; /* grid tiles, icon squares, nested blocks */
+    --radius-lg: 22px; /* dashboard cards, list rows */
+    --radius-xl: 28px; /* feature / pricing cards, accent blocks */
+    --radius-2xl: 36px; /* hero frames, image containers */
+
+    /* Deliberately no named --spacing-* tokens. Width utilities resolve through
+       the spacing namespace before the container scale, so a t-shirt name here
+       (--spacing-sm) silently redefines max-w-sm to 8px. Use the numeric scale
+       (p-2, gap-4 — the DS steps land on it: 2/4/8/12/16/24/32/48/96px). */
+
+    /* Flat by design — shadows are for genuinely floating chrome only */
+    --shadow-lift: 0 2px 10px rgba(0, 0, 0, 0.22);
+    --shadow-float:
+        0 18px 44px -14px rgba(0, 0, 0, 0.55),
+        0 4px 12px -6px rgba(0, 0, 0, 0.35);
+    --shadow-glow-brand: 0 12px 32px -10px rgba(15, 157, 99, 0.45);
+    --shadow-glow-gold: 0 12px 30px -12px rgba(245, 182, 62, 0.4);
+    --shadow-card-light:
+        0 2px 6px rgba(16, 19, 32, 0.05),
+        0 14px 36px -18px rgba(16, 19, 32, 0.14);
+    --inset-shadow-press: inset 0 2px 8px rgba(0, 0, 0, 0.25);
+
+    /* Brand + status hues as utilities (bg-brand, text-gold, border-pending…) */
+    --color-brand: var(--ddk-brand);
+    --color-brand-bright: var(--ddk-brand-bright);
+    --color-brand-soft: var(--ddk-brand-soft);
+    --color-blue: var(--ddk-blue);
+    --color-violet: var(--ddk-violet);
+    --color-gold: var(--ddk-gold);
+    --color-gold-deep: var(--ddk-gold-deep);
+    --color-pink: var(--ddk-pink);
+    --color-ink: var(--ddk-ink);
+
+    --color-night: var(--ddk-night);
+    --color-surface: var(--ddk-surface);
+    --color-surface-2: var(--ddk-surface-2);
+    --color-surface-3: var(--ddk-surface-3);
+
+    --color-positive: var(--ddk-positive);
+    --color-positive-soft: var(--ddk-positive-soft);
+    --color-pending: var(--ddk-pending);
+    --color-pending-soft: var(--ddk-pending-soft);
+    --color-attention: var(--ddk-attention);
+    --color-attention-soft: var(--ddk-attention-soft);
+    --color-info: var(--ddk-info);
+    --color-info-soft: var(--ddk-info-soft);
+    --color-on-status: var(--ddk-on-status);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    /* The one surviving rule: separators that split a menu or a section. */
+    --color-divider: var(--ddk-divider);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar-background);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* ============================================================
+   Typography scale — headings ride heavy weights with tight
+   leading; body stays relaxed. Exposed as .type-* classes so both
+   Blade and Vue can reach the roles without re-deriving them.
+   ============================================================ */
+@layer components {
+    .type-display-hero {
+        font-family: var(--font-display);
+        font-size: 76px;
+        font-weight: 800;
+        line-height: 1.02;
+    }
+
+    .type-display-large {
+        font-family: var(--font-display);
+        font-size: 54px;
+        font-weight: 700;
+        line-height: 1.06;
+    }
+
+    .type-heading-xl {
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1.15;
+    }
+
+    .type-heading-lg {
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .type-heading-md {
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .type-heading-sm {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .type-body-lg {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.8;
+    }
+
+    .type-body-strong {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .type-body-md {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.55;
+    }
+
+    /* UPPERCASE survives only in eyebrows and micro status labels */
+    .type-eyebrow {
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    /* Button labels are bold sentence case on pill shapes */
+    .type-button {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: 0;
+    }
+
+    .type-button-light {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    .type-caption {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.45;
+    }
+
+    .type-micro {
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.4;
+        letter-spacing: 0.08em;
+    }
+
+    .type-code {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.55;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+
+        font-size: 15px;
+        line-height: 1.55;
+    }
+
+    body:has([data-admin-area]) {
+        --spacing: 0.275rem;
+        --text-xs: 0.8125rem;
+        --text-sm: 1rem;
+        --text-base: 1.125rem;
+        --text-lg: 1.25rem;
+        --text-xl: 1.375rem;
+        --text-2xl: 1.625rem;
+        --text-3xl: 2.125rem;
+        --text-4xl: 2.5rem;
+        --text-5xl: 3.25rem;
+        --text-6xl: 4rem;
+
+        font-size: 16.5px;
+    }
+}
